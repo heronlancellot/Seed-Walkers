@@ -12,4 +12,4 @@ yarn dev
 pnpm dev
 ```
 
-# npm install 
+# npm install ethers

@@ -4,16 +4,15 @@ import Footer from '../components/Footer'
 import NFT from '../components/NFT'
 import Walker from '../components/Walker'
 
-// import { Contract, providers, utils } from "ethers";
+import { Contract, providers, utils } from "ethers";
 import React, { useEffect, useRef, useState } from "react";
-// import { abi, TOKEN_CONTRACT_ADDRESS} from '../constants/index'
-// import Web3Modal from "web3modal";
-// import styles from '../styles/Home.module.css'
+import Web3Modal from "web3modal";
 
 export default function Home() {
 
   const [WalletConnected, setWalletConnected] = useState(false);
   const web3ModalRef = useRef();
+
   const getProviderOrSigner = async (needSigner = false) => {
     
     const provider = await web3ModalRef.current.connect();
@@ -30,18 +29,6 @@ export default function Home() {
       return signer;
     }
     return web3Provider;
-  };
-
-  const getTotalTokensMinted = async () => {
-
-    try {
-      const provider = await getProviderOrSigner();
-      const tokenContract = new Contract(TOKEN_CONTRACT_ADDRESS, abi, provider);
-      const _tokensMinted = await tokenContract.totalSupply();
-      setTokensMinted(_tokensMinted);
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   const connectWallet = async () => {
@@ -64,20 +51,19 @@ export default function Home() {
         disableInjectedProvider: false,
       });
       connectWallet();
-      getTotalTokensMinted();
     }
 
   }, [WalletConnected]);
 
   const ButtonMetamask = () => {
 
-  if(!WalletConnected){
-      return (
-        <button onClick={connectWallet} className={styles.btn}> 
-          Connect your Wallet
-        </button>
-      )
-    };
+    if(!WalletConnected){
+        return (
+          <button onClick={connectWallet}> 
+            Connect your Wallet
+          </button>
+        )
+      };
   }
 
   return (
@@ -88,6 +74,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <ButtonMetamask/>
       <Header/>
       <NFT/>
       <Walker/>
