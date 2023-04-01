@@ -13,3 +13,4 @@ pnpm dev
 ```
 
 # npm install ethers
+# npm install web3modal
